@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 
 const Searchterm = () => {
-    const [term, setTerm] = useState('')
+    const [term, setTerm] = useState('program')
     const [results, setResults] = useState([])
+
 
     useEffect(() => {
         const search = async () => {
@@ -22,15 +23,25 @@ const Searchterm = () => {
 
 
         }
-        setTimeout(() => {
-            if (term) {
+        if (term && !results.length) {
+            search()
+        }
+        else {
+            const setTimeoutId = setTimeout(() => {
+                if (term) {
 
-                search()
+                    search()
+                }
+            }, 1000)
+
+            return () => {
+                clearTimeout(setTimeoutId);
             }
-        }, 500)
+        }
 
 
-    }, [term])
+
+    }, [term, results.length])
     const renderResults = results.map((result) => {
         return (
             <div className='item' key={result.pageid}>
