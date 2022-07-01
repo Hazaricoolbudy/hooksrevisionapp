@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import './App.css';
 import Dropdown from './components/Dropdown';
-// import Accordians from './components/Accordians';
+import Accordians from './components/Accordians';
 import Searchterm from './components/Searchterm';
 import Translate from './components/Translate';
+import Route from './components/Route';
+import Header from './components/Header';
 const items = [
   {
     title: 'What is React ',
@@ -37,18 +39,32 @@ const options = [
 function App() {
   const [selected, setSelected] = useState(options[0])
   const [showDropdown, setShowDropDown] = useState(true)
+
   return (
     <div className="container     ">
-      {/* <Accordians items={items} /> <Searchterm />*/}
-      <button onClick={() => { setShowDropDown(!showDropdown) }}>Toggle Dropdown</button>
-      {
-        showDropdown ?
-          <Dropdown options={options}
-            onSelectedChange={setSelected}
-            selected={selected} /> : null
-      }
+      <Header />
+      <Route path='/'>
+        <Accordians items={items} />
+      </Route>
+      <Route path='/search'>
+        <Searchterm />
+      </Route>
+      <Route path='/dropdown'>
+        <button onClick={() => { setShowDropDown(!showDropdown) }}>Toggle Dropdown</button>
+        {
+          showDropdown ?
+            <Dropdown options={options}
+              onSelectedChange={setSelected}
+              selected={selected} /> : null
+        }
+      </Route>
+      <Route path='/translate'>
+        <Translate />
+      </Route>
 
-      <Translate />
+
+
+
 
     </div>
   );
